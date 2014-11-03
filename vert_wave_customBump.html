@@ -31,11 +31,9 @@
       // NOTE : according to the WebGL standard, 0.0f is not accepted
 		//  float height = 0.0;
 
-      float s_contrib = sin(position.x*2.0*3.14159 + u_time);
-      float t_contrib = cos(position.y*2.0*3.14159 + u_time);
-      float height = s_contrib * t_contrib;
-      myColor = mix(u_color_low, u_color_high, height);
-      
+//bump
+      float height = sin(5.0*(position.x + u_time/2.0))*cos(5.0*(position.y + u_time/2.0))/5.0;
+      myColor = mix(u_color_low, u_color_high, height/3.0);
       // NOTE : gl_Position is always a vec4
 		  gl_Position = u_modelViewPerspective * vec4(vec3(position, height), 1.0);
      

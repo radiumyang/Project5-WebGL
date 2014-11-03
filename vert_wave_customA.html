@@ -31,11 +31,13 @@
       // NOTE : according to the WebGL standard, 0.0f is not accepted
 		//  float height = 0.0;
 
-      float s_contrib = sin(position.x*2.0*3.14159 + u_time);
-      float t_contrib = cos(position.y*2.0*3.14159 + u_time);
-      float height = s_contrib * t_contrib;
-      myColor = mix(u_color_low, u_color_high, height);
-      
+//http://commons.wikimedia.org/wiki/File:3d-function-continuous.svg
+    float x = position.x +sin(u_time*0.6);
+     float y = position.y+cos(u_time*0.6);
+      float height = 2.0*(x * y * y) /(x*x + y*y*y*y);
+      myColor = mix(u_color_low, u_color_high, height/0.5);
+
+     
       // NOTE : gl_Position is always a vec4
 		  gl_Position = u_modelViewPerspective * vec4(vec3(position, height), 1.0);
      
