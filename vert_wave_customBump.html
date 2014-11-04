@@ -32,6 +32,7 @@
 		//  float height = 0.0;
 
 //bump
+//http://www.benjoffe.com/code/tools/functions3d/examples
       float height = sin(5.0*(position.x + u_time/2.0))*cos(5.0*(position.y + u_time/2.0))/5.0;
       myColor = mix(u_color_low, u_color_high, height/3.0);
       // NOTE : gl_Position is always a vec4
