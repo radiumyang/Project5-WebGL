@@ -23,19 +23,26 @@ uniquie feel.
 -------------------------------------------------------------------------------
 PART 1 IMPLEMENTATIONS: Vertex Shader
 -------------------------------------------------------------------------------
+**Video Demo**  
+http://youtu.be/GwDTq3_JsGA
 
 * A sin-wave based vertex shader:
 ![sin-wave vertex shader](result_img/1A.JPG)
+
+![bump vertex shader](result_img/sinwave.gif)
 
 * Bump vertex shader:
 
 Reference: http://www.benjoffe.com/code/tools/functions3d/examples
 ![bump vertex shader](result_img/1B_Bump.JPG)
 
+![bump vertex shader](result_img/bump.gif)
+
 * Beautiful wave:
 
 Reference: http://commons.wikimedia.org/wiki/File:3d-function-continuous.svg
 ![wave vertex shader](result_img/1B_Wave.JPG)
+![w](result_img/beautifulwave.gif)
 
 -------------------------------------------------------------------------------
 PART 2 IMPLEMENTATIONS: Fragment Globe 
@@ -44,6 +51,7 @@ PART 2 IMPLEMENTATIONS: Fragment Globe
 **Gh-pages**
 
 http://radiumyang.github.io/Project5-WebGL/
+
 
 **Feature List**
 
