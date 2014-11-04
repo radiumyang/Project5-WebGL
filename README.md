@@ -3,19 +3,6 @@ CIS565: Project 5: WebGL
 -------------------------------------------------------------------------------
 Fall 2014
 -------------------------------------------------------------------------------
-Due Monday 11/03/2014
--------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------
-NOTE:
--------------------------------------------------------------------------------
-This project requires any graphics card with support for a modern OpenGL 
-pipeline. Any AMD, NVIDIA, or Intel card from the past few years should work 
-fine, and every machine in the SIG Lab and Moore 100 is capable of running 
-this project.
-
-This project also requires a WebGL capable browser. The project is known to 
-have issues with Chrome on windows, but Firefox seems to run it fine.
 
 -------------------------------------------------------------------------------
 INTRODUCTION:
@@ -34,100 +21,27 @@ bump mapping, specular masking, and adding a cloud layer to give your globe a
 uniquie feel.
 
 -------------------------------------------------------------------------------
-CONTENTS:
+PART 1 IMPLEMENTATIONS: Vertex Shader
 -------------------------------------------------------------------------------
-The Project5 root directory contains the following subdirectories:
-	
-* js/ contains the javascript files, including external libraries, necessary.
-* assets/ contains the textures that will be used in the second half of the
-  assignment.
-* resources/ contains the screenshots found in this readme file.
-
--------------------------------------------------------------------------------
-PART 1 REQUIREMENTS:
--------------------------------------------------------------------------------
-
-In Part 1, you are given code for:
-
-* Drawing a VBO through WebGL
-* Javascript code for interfacing with WebGL
-* Functions for generating simplex noise
-
-You are required to implement the following:
 
 * A sin-wave based vertex shader:
+![sin-wave vertex shader](result_img/1A.JPG)
 
-![Example sin wave grid](resources/sinWaveGrid.png)
+* Bump vertex shader:
+![bump vertex shader](result_img/1B_Bump.JPG)
 
-* One interesting vertex shader of your choice
-
--------------------------------------------------------------------------------
-PART 1 WALKTHROUGH:
--------------------------------------------------------------------------------
-**Sin Wave**
-
-* For this assignment, you will need the latest version of Firefox.
-* Begin by opening index.html. You should see a flat grid of black and white 
-  lines on the xy plane:
-
-![Example boring grid](resources/emptyGrid.png)
-
-* In this assignment, you will animate the grid in a wave-like pattern using a 
-  vertex shader, and determine each vertex’s color based on its height, as seen 
-  in the example in the requirements.
-* The vertex and fragment shader are located in script tags in `index.html`.
-* The JavaScript code that needs to be modified is located in `index.js`.
-* Required shader code modifications:
-	* Add a float uniform named u_time.
-	* Modify the vertex’s height using the following code:
-
-	```glsl
-	float s_contrib = sin(position.x*2.0*3.14159 + u_time);
-	float t_contrib = cos(position.y*2.0*3.14159 + u_time);
-	float height = s_contrib*t_contrib;
-	```
-
-	* Use the GLSL mix function to blend together two colors of your choice based 
-	  on the vertex’s height. The lowest possible height should be assigned one 
-	  color (for example, `vec3(1.0, 0.2, 0.0)`) and the maximum height should be 
-	  another (`vec3(0.0, 0.8, 1.0)`). Use a varying variable to pass the color to 
-	  the fragment shader, where you will assign it `gl_FragColor`.
-
-  * Using dat.gui, you will add color pickers to modify the max and min colors
-    via GUI.  You will do this by adding the proper uniforms to the fragment
-    shader, and using the addColor function from dat.GUI.
-
-* Required JavaScript code modifications:
-	* A floating-point time value should be increased every animation step. 
-	  Hint: the delta should be less than one.
-	* To pass the time to the vertex shader as a uniform, first query the location 
-	  of `u_time` using `context.getUniformLocation` in `initializeShader()`. 
-	  Then, the uniform’s value can be set by calling `context.uniform1f` in 
-	  `animate()`.
-
-**Wave Of Your Choice**
-
-* Create another copy of `index.html`. Call it `index_custom.html`, or 
-  something similar.
-* Implement your own interesting vertex shader! In your README.md with your 
-  submission, describe your custom vertex shader, what it does, and how it 
-  works.
+* Beautiful wave:
+![wave vertex shader](result_img/1B_Wave.JPG)
 
 -------------------------------------------------------------------------------
-PART 2 REQUIREMENTS:
+PART 2 IMPLEMENTATIONS: Fragment Globe 
 -------------------------------------------------------------------------------
-In Part 2, you are given code for:
 
-* Reading and loading textures
-* Rendering a sphere with textures mapped on
-* Basic passthrough fragment and vertex shaders 
-* A basic globe with Earth terrain color mapping
-* Gamma correcting textures
-* javascript to interact with the mouse
-  * left-click and drag moves the camera around
-  * right-click and drag moves the camera in and out
+**Gh-pages**
 
-You are required to implement:
+http://radiumyang.github.io/Project5-WebGL/
+
+**Feature List**
 
 * Bump mapped terrain
 * Rim lighting to simulate atmosphere
@@ -135,39 +49,23 @@ You are required to implement:
 * Specular mapping
 * Moving clouds
 
-You are also required to pick one open-ended effect to implement:
-
-* Procedural water rendering and animation using noise 
+Extra:
 * Shade based on altitude using the height map
-* Cloud shadows via ray-tracing through the cloud map in the fragment shader
-* Orbiting Moon with texture mapping and shadow casting onto Earth
-* Draw a skybox around the entire scene for the stars.
-* Your choice! Email Liam and Patrick to get approval first
 
-Finally in addition to your readme, you must also set up a gh-pages branch 
-(explained below) to expose your beautiful WebGL globe to the world.
+Final Result with all features merged:
 
-Some examples of what your completed globe renderer will look like:
+![Completed globe, day side](result_img/2_height_merged2.JPG)
 
-![Completed globe, day side](resources/globe_day.png)
+### STEP 1: Bumping Map
 
-Figure 0. Completed globe renderer, daylight side.
+![Completed globe, twilight](result_img/bumping map.JPG)
 
-![Completed globe, twilight](resources/globe_twilight.png)
+### STEP 2: NightColor + Rim + Specular Color
 
-Figure 1. Completed globe renderer, twilight border.
-
-![Completed globe, night side](resources/globe_night.png)
+![Completed globe, night side](result_img/2_night_spec.JPG)
 
 Figure 2. Completed globe renderer, night side.
 
--------------------------------------------------------------------------------
-PART 2 WALKTHROUGH:
--------------------------------------------------------------------------------
-
-Open part2/frag_globe.html in Firefox to run it. You’ll see a globe 
-with Phong lighting like the one in Figure 3. All changes you need to make 
-will be in the fragment shader portion of this file.
 
 ![Initial globe](resources/globe_initial.png)
 
@@ -263,100 +161,15 @@ finished globe with rim lighting.
 For more information on rim lighting, 
 read http://www.fundza.com/rman_shaders/surface/rim_effects/index.html.
 
--------------------------------------------------------------------------------
-GH-PAGES
--------------------------------------------------------------------------------
-Since this assignment is in WebGL you will make your project easily viewable by 
-taking advantage of GitHub's project pages feature.
 
-Once you are done you will need to create a new branch named gh-pages:
 
-`git branch gh-pages`
-
-Switch to your new branch:
-
-`git checkout gh-pages`
-
-Create an index.html file that is either your renamed frag_globe.html or 
-contains a link to it, commit, and then push as usual. Now you can go to 
-
-`<user_name>.github.io/<project_name>` 
-
-to see your beautiful globe from anywhere.
-
--------------------------------------------------------------------------------
-README
--------------------------------------------------------------------------------
-All students must replace or augment the contents of this Readme.md in a clear 
-manner with the following:
-
-* A brief description of the project and the specific features you implemented.
-* At least one screenshot of your project running.
-* A 30 second or longer video of your project running.  To create the video you
-  can use http://www.microsoft.com/expression/products/Encoder4_Overview.aspx 
-* A performance evaluation (described in detail below).
 
 -------------------------------------------------------------------------------
 PERFORMANCE EVALUATION
 -------------------------------------------------------------------------------
-The performance evaluation is where you will investigate how to make your 
-program more efficient using the skills you've learned in class. You must have
-performed at least one experiment on your code to investigate the positive or
-negative effects on performance. 
-
-We encourage you to get creative with your tweaks. Consider places in your code
-that could be considered bottlenecks and try to improve them. 
-
-Each student should provide no more than a one page summary of their
-optimizations along with tables and or graphs to visually explain any
-performance differences.
 
 In this homework, we do not expect crazy performance evaluation in terms of
 optimizations.  However, it would be good to take performance benchmarks at
 every step in this assignment to see how complicated fragment shaders affect the
 overall speed.  You can do this by using stats.js.
 
--------------------------------------------------------------------------------
-THIRD PARTY CODE POLICY
--------------------------------------------------------------------------------
-* Use of any third-party code must be approved by asking on the Google groups.  
-  If it is approved, all students are welcome to use it.  Generally, we approve 
-  use of third-party code that is not a core part of the project.  For example, 
-  for the ray tracer, we would approve using a third-party library for loading 
-  models, but would not approve copying and pasting a CUDA function for doing 
-  refraction.
-* Third-party code must be credited in README.md.
-* Using third-party code without its approval, including using another 
-  student's code, is an academic integrity violation, and will result in you 
-  receiving an F for the semester.
-
--------------------------------------------------------------------------------
-SELF-GRADING
--------------------------------------------------------------------------------
-* On the submission date, email your grade, on a scale of 0 to 100, to Harmony, 
-  harmoli+cis565@seas.upenn.com, with a one paragraph explanation.  Be concise and 
-  realistic.  Recall that we reserve 30 points as a sanity check to adjust your 
-  grade.  Your actual grade will be (0.7 * your grade) + (0.3 * our grade).  We 
-  hope to only use this in extreme cases when your grade does not realistically 
-  reflect your work - it is either too high or too low.  In most cases, we plan 
-  to give you the exact grade you suggest.
-* Projects are not weighted evenly, e.g., Project 0 doesn't count as much as 
-  the path tracer.  We will determine the weighting at the end of the semester 
-  based on the size of each project.
-
----
-SUBMISSION
----
-As with the previous project, you should fork this project and work inside of
-your fork. Upon completion, commit your finished project back to your fork, and
-make a pull request to the master repository.  You should include a README.md
-file in the root directory detailing the following
-
-* A brief description of the project and specific features you implemented
-* At least one screenshot of your project running.
-* A link to a video of your project running.
-* Instructions for building and running your project if they differ from the
-  base code.
-* A performance writeup as detailed above.
-* A list of all third-party code used.
-* This Readme file edited as described above in the README section.
