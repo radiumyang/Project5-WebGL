@@ -56,6 +56,8 @@
     var u_BumpLocation;
     var u_timeLocation;
 
+    var u_HeightLocation;
+
     (function initializeShader() {
         var vs = getShaderSource(document.getElementById("vs"));
         var fs = getShaderSource(document.getElementById("fs"));
@@ -77,6 +79,8 @@
         u_timeLocation = gl.getUniformLocation(program,"u_time");
         u_CameraSpaceDirLightLocation = gl.getUniformLocation(program,"u_CameraSpaceDirLight");
 
+        u_HeightLocation = gl.getUniformLocation(program, "u_Height");
+
         gl.useProgram(program);
     })();
 
@@ -86,6 +90,7 @@
     var transTex = gl.createTexture();
     var lightTex = gl.createTexture();
     var specTex  = gl.createTexture();
+    var heightTex = gl.createTexture();
 
     function initLoadedTexture(texture){
         gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -288,10 +293,14 @@
         gl.uniform1i(u_EarthSpecLocation, 5);
         gl.drawElements(gl.TRIANGLES, numberOfIndices, gl.UNSIGNED_SHORT,0);
 
+        gl.activeTexture(gl.TEXTURE6);
+        gl.bindTexture(gl.TEXTURE_2D, heightTex);
+        gl.uniform1i(u_HeightLocation, 6);
+
         time += 0.001;
 
         gl.uniform1f(u_timeLocation, time);
-        
+
         window.requestAnimFrame(animate);
     }
 
@@ -303,7 +312,7 @@
             initLoadedTexture(texture);
 
             // Animate once textures load.
-            if (++textureCount === 6) {
+            if (++textureCount === 7) {
                 animate();
             }
         }
@@ -316,4 +325,6 @@
     initializeTexture(transTex, "assets/earthtrans1024.png");
     initializeTexture(lightTex, "assets/earthlight1024.png");
     initializeTexture(specTex, "assets/earthspec1024.png");
+
+    initializeTexture(heightTex, "assets/earthheight1024.png")
 }());
